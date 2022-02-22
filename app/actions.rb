@@ -29,6 +29,7 @@ get '/finstagram_posts/new' do
   erb(:"finstagram_posts/new")
 end
 
+
 post '/finstagram_posts' do
   photo_url = params[:photo_url]
 
@@ -62,6 +63,20 @@ get '/logout' do
 
 end
 
+post '/comments' do
+  # point values from params to variables
+  text = params[:text]
+  finstagram_post_id = params[:finstagram_post_id]
+
+  # instantiate a comment with those values & assign the comment to the `current_user`
+  comment = Comment.new({ text: text, finstagram_post_id: finstagram_post_id, user_id: current_user.id })
+
+  # save the comment
+  comment.save
+
+  # `redirect` back to wherever we came from
+  redirect(back)
+end
 
 post '/signup' do
   email       =params[:email]
@@ -80,4 +95,5 @@ erb(:signup)
 
  end
 
+ 
 end
