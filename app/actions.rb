@@ -9,11 +9,6 @@ helpers do
     @finstagram_posts = FinstagramPost.order(created_at: :desc)
     erb(:index)
   end
-
-  get '/finstagram_posts/:id' do
-    @finstagram_post = FinstagramPost.find(params[:id])  
-    erb(:"finstagram_posts/show")               
-  end
   
 
 get '/signup' do
@@ -40,6 +35,11 @@ post '/finstagram_posts' do
   else
     erb(:"finstagram_posts/new")
   end
+end
+
+get '/finstagram_posts/:id' do
+  @finstagram_post = FinstagramPost.find(params[:id])  
+  erb(:"finstagram_posts/show")               
 end
 
 post '/login' do
