@@ -9,12 +9,12 @@ helpers do
     @finstagram_posts = FinstagramPost.order(created_at: :desc)
     erb(:index)
   end
-  
 
   get '/finstagram_posts/:id' do
-    @finstagram_post = FinstagramPost.find(params[:id])   
+    @finstagram_post = FinstagramPost.find(params[:id])  
     erb(:"finstagram_posts/show")               
   end
+  
 
 get '/signup' do
   @user = User.new
@@ -26,9 +26,9 @@ get '/login' do
 end
 
 get '/finstagram_posts/new' do
+  @finstagram_post = FinstagramPost.new
   erb(:"finstagram_posts/new")
 end
-
 
 post '/finstagram_posts' do
   photo_url = params[:photo_url]
@@ -75,6 +75,21 @@ post '/comments' do
   comment.save
 
   # `redirect` back to wherever we came from
+  redirect(back)
+end
+
+post '/likes' do
+  finstagram_post_id = params[:finstagram_post_id]
+
+  like = Like.new({ finstagram_post_id: finstagram_post_id, user_id: current_user.id })
+  like.save
+
+  redirect(back)
+end
+
+delete '/likes/:id' do
+  like = Like.find(params[:id])
+  like.destroy
   redirect(back)
 end
 
