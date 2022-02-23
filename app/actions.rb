@@ -46,15 +46,15 @@ post '/login' do
   username = params[:username]
   password = params[:password]
 
-  @user = User.find_by(username: username)
+  user = User.find_by(username: username)  
 
-  if @user && @user.password == password
-    session[:user_id]= @user.id 
-    "Success! User with id #{session[:user_id]} is logged in!"
+  if user && user.password == password
+    session[:user_id] = user.id
+    redirect to('/')
   else
-    @error_message = "Login Failed"
+    @error_message = "Login failed."
     erb(:login)
-end
+  end
 end
 
 get '/logout' do
